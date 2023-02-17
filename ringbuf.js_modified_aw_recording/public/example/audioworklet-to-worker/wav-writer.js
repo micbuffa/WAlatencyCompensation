@@ -143,7 +143,7 @@ onmessage = function (e) {
 function postCurrentBuffer() {
   //console.log("Post message audioBuf");
   postMessage({
-    command: "audioBufferCurrent",
+    command: "audioBufferCurrentUpdated",
     buffer: audioBuf,
   });
 }
