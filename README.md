@@ -9,4 +9,17 @@ So round-trip latency = input latency + output latency
 Input latency = usb/audio driver/os stuff + audio buffer latency
 audio buffer latency is audio buffer size / sample rate, so 128/44100 = 0,002902494331066 s so about 3ms. It is also returned by the audio context baseLatency property with Chrome, while FF returns 0!
 
-Output Latency is the time between the sound starts to be processed until it reaches the speakers. It can be measured# WAlatencyCompensation
+Output Latency is the time between the sound starts to be processed until it reaches the speakers. It can be estimated using the roundtrip-latency-tester that produces a sound and records it. Or we can use an estimation proposed by the audioContext outputLatency property
+
+outputLatency = audioContext.outputLatency + usb / driver /os stuff.
+
+If we call x this (usb / driver / os stuff), we do have :
+
+roundtrip_latency = inputLatency + outputLatency
+                  = x + (audio buffer size / sample rate) + (audioContext.outputLatency + x)
+                  = 2x + (audio buffer size / sample rate) + audioContext.outputLatency
+x = roundtrip_latency - ((audio buffer size / sample rate) + audioContext.outputLatency) / 2
+
+Then, we can compute a good estimation of the input latency and output latency, and use them to do "latency compensation"
+
+
