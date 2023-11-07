@@ -108,6 +108,11 @@ onmessage = function (e) {
           writeIndex += 2;
         }
       }
+
+      // Finally, set the size of the file in the header.
+      //view.setUint32(4, wav.length - 8, true);
+      //view.setUint32(40, wav.length - header.length, true);
+
       //postMessage(wav.buffer, [wav.buffer]);
       //console.log(audioBuf);
       //console.log('---- PCM ----');
